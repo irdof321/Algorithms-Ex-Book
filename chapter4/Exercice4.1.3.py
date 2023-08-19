@@ -50,6 +50,20 @@ def FindMaxCrossingSubArray(array):
             right_index = j
     return left_sum + right_sum, (left_index, right_index)
 
+def FindMaxSubArrayLinear(array):
+    max_sum = - float("inf")
+    current_sum = 0
+    index = (0, 0)
+    for i in range(len(array)):
+        current_sum += array[i]
+        if current_sum > max_sum:
+            max_sum = current_sum
+            index = (index[0], i)
+        if current_sum < 0:
+            current_sum = 0
+            index = (i + 1, i + 1)
+    return max_sum, index
+
 if __name__ == "__main__":
     # Test time of computation for both methods 
 
@@ -66,4 +80,10 @@ if __name__ == "__main__":
     #need more decimal
     print("Time of computation for divide and conquer method: {0:.5f}" .format(t1 - t0)
           , "The result is: {0}".format(FindMaxSubArray(array)))
+    
+    t0 = time.time()
+    FindMaxSubArrayLinear(array)
+    t1 = time.time()
+    
+    print("Time of computation for linear method: {0:.5f}" .format(t1 - t0), "The result is: {0}".format(FindMaxSubArrayLinear(array)))
     
